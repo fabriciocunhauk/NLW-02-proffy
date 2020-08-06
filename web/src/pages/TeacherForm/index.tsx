@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
@@ -9,6 +9,39 @@ import warningIcon from '../../assets/images/icons/warning.svg';
 import './styles.css';
 
 const TeacherForm = () => {
+    const [name, setName] = useState('');
+    const [avatar, setAvatar] = useState('');
+    const [whatsapp, setWhatsapp] = useState('');
+    const [bio, setBio] = useState('');
+
+    const [subject, setSubject] = useState('');
+    const [cost, setCost] = useState('');
+
+    const [scheduleItems, setScheduleItems] = useState([
+       { week_day: 0, from: '', to: ''} 
+    ]);
+
+    const addNewScheduleItem = () => {
+        setScheduleItems([
+            ...scheduleItems, { week_day: 0, from: '', to: ''} 
+        ])
+    }
+
+    function handleCreateClass(event: FormEvent) {
+        console.log({
+            name,
+            avatar,
+            whatsapp,
+            bio,
+            subject,
+            cost
+        });
+        
+
+        event.preventDefault();
+    }
+
+
     return (
         <div id="page-teacher-form" className="container">
             <PageHeader
@@ -17,13 +50,38 @@ const TeacherForm = () => {
             />
 
             <main>
+                <form onSubmit={handleCreateClass}>
+
                 <fieldset>
                     <legend>Your info</legend>
 
-                    <Input name="name" label="Full name" />
-                    <Input name="avatar" label="Avatar" />
-                    <Input name="whatsapp" label="Whatsapp" />
-                    <Textarea name="bio" label="Biography" />
+                    <Input 
+                        name="name" 
+                        label="Full name" 
+                        value={name}
+                        onChange={event => setName(event.target.value)} 
+                    />
+
+                    <Input 
+                        name="avatar" 
+                        label="Avatar" 
+                        value={avatar}
+                        onChange={event => setAvatar(event.target.value)} 
+                    />
+
+                    <Input 
+                        name="whatsapp" 
+                        label="Whatsapp" 
+                        value={whatsapp}
+                        onChange={event => setWhatsapp  (event.target.value)} 
+                    />
+
+                    <Textarea 
+                        name="bio" 
+                        label="Biography" 
+                        value={bio}
+                        onChange={event => setBio(event.target.value)} 
+                    />
                 </fieldset>
 
                 <fieldset>
@@ -32,6 +90,8 @@ const TeacherForm = () => {
                     <Select
                         name="subject"
                         label="Subject"
+                        value={subject}
+                        onChange={event => setSubject(event.target.value)} 
                         options={[
                             { value: 'Programing', label: 'Programing' },
                             { value: 'Art', label: 'Art' },
@@ -43,19 +103,25 @@ const TeacherForm = () => {
                             { value: 'Math', label: 'Math' },
                         ]}
                     />
-                    <Input name="cost" label="Cost per class" />
+                    <Input 
+                        name="cost" 
+                        label="Cost per class" 
+                        value={cost}
+                        onChange={event => setCost(event.target.value)} 
+                        />
                 </fieldset>
 
                 <fieldset>
                     <legend>
                         Available times
                         
-                    <button type="button">
+                    <button type="button" onClick={addNewScheduleItem} >
                             + New times
                     </button>
 
                         </legend>
-                    <div className="schedule-item">
+                   { scheduleItems.map(scheduleItem => {
+                        return ( <div key={scheduleItem.week_day} className="schedule-item">
                     <Select
                         name="week_day"
                         label="Week day"
@@ -72,8 +138,10 @@ const TeacherForm = () => {
                     <Input name="from" label="from" type="time" />
                     <Input name="to" label="to" type="time" />
                     </div>
-                </fieldset>
+                    );
+                        })}
 
+                </fieldset>
                 <footer>
                     <p>
                         <img src={warningIcon} alt="Warning" />
@@ -81,10 +149,11 @@ const TeacherForm = () => {
                         Enter your details
                     </p>
 
-                    <button type="button">
+                    <button type="submit">
                         Save
                     </button>
                 </footer>
+                </form>
             </main>
         </div>
     )

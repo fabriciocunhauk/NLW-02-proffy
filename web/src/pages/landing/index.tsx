@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // add Link for SPA activation
 import { Link } from 'react-router-dom';
 
@@ -8,9 +8,22 @@ import landingimg from '../../assets/images/landing.svg';
 import studyicon from '../../assets/images/icons/study.svg';
 import giveClassesIcon from '../../assets/images/icons/give-classes.svg';
 import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
+
+import api from '../../services/api';
+
 import './styles.css';
 
 const Landing = () => {
+    const [totalConnections, setTotalConnections] = useState(0);
+
+    useEffect(() => {
+        api.get('connections').then(res => {
+            const { total } = res.data;
+
+            setTotalConnections(total)
+        })
+    }, [])
+
     return (
         <div id="page-landing">
             <div id="page-landing-content" className="container">
@@ -38,7 +51,7 @@ const Landing = () => {
                 </div>
 
                 <span className="total-connections">
-                    Total 200 Connections <img src={purpleHeartIcon} alt="purple-heart" />
+                    Total {totalConnections} Connections <img src={purpleHeartIcon} alt="purple-heart" />
                 </span>
             </div>
         </div>
