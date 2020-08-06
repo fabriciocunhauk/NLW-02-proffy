@@ -1,4 +1,6 @@
 import React, { useState, FormEvent } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
@@ -7,8 +9,11 @@ import Select from '../../components/Select';
 import warningIcon from '../../assets/images/icons/warning.svg';
 
 import './styles.css';
+import api from '../../services/api';
 
 const TeacherForm = () => {
+const history = useHistory();
+
     const [name, setName] = useState('');
     const [avatar, setAvatar] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
@@ -27,19 +32,37 @@ const TeacherForm = () => {
         ])
     }
 
-    function handleCreateClass(event: FormEvent) {
-        console.log({
-            name,
-            avatar,
-            whatsapp,
-            bio,
-            subject,
-            cost
-        });
-        
+    function setScheduleItemValue(position: number, field: string, value: string) {
+        const updatedScheduleItems = scheduleItems.map((scheduleItem, index) => {
+            if (index === position) {
+                return { ...scheduleItem, [field]: value};
+            }
 
-        event.preventDefault();
+            return scheduleItem;
+        })
+        setScheduleItems(updatedScheduleItems)
+        
     }
+
+    function handleCreateClass(event: FormEvent) {
+        event.preventDefault();
+
+api.post('classes', {
+    name,
+    avatar,
+    whatsapp,
+    bio,
+    subject,
+    cost: Number(cost),
+    schedule: scheduleItems
+    }).then(() => {
+        alert('Registration Succsessfull!');
+
+        history.push('/');
+    }).catch(() => {
+        alert('Registration Error try again!');
+    })
+}
 
 
     return (
@@ -120,11 +143,13 @@ const TeacherForm = () => {
                     </button>
 
                         </legend>
-                   { scheduleItems.map(scheduleItem => {
+                   { scheduleItems.map((scheduleItem, index) => {
                         return ( <div key={scheduleItem.week_day} className="schedule-item">
                     <Select
                         name="week_day"
                         label="Week day"
+                        value={scheduleItem.week_day}
+                        onChange={event => setScheduleItemValue(index, 'week_day', event.target.value)}
                         options={[
                             { value: '0', label: 'Sunday' },
                             { value: '1', label: 'Monday' },
@@ -135,8 +160,22 @@ const TeacherForm = () => {
                             { value: '6', label: 'Saturday' },
                         ]}
                     />
-                    <Input name="from" label="from" type="time" />
-                    <Input name="to" label="to" type="time" />
+                    <Input 
+                    name="from" 
+                    label="from" 
+                    type="time" 
+                    value={scheduleItem.from}
+                    onChange={event => setScheduleItemValue(index, 'from', event.target.value)}
+                    />
+
+                    <Input 
+                    name="to" 
+                    label="to" 
+                    type="time" 
+                    value={scheduleItem.to}
+                    onChange={event => setScheduleItemValue(index, 'to', event.target.value)}
+                    />
+
                     </div>
                     );
                         })}
