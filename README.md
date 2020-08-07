@@ -68,7 +68,7 @@ Done using:
 # Clone o Repositoria
 $ git clone https://github.com/RafaelGoulartB/Proffy.git
 ```
-### 📦 Run a API
+### 📦 Run API
 
 ```bash
 # Vá para a pasta do servidor
