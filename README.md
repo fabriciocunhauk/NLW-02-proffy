@@ -49,10 +49,10 @@
 
 ### Mobile Screenshot
 <div style="display: flex; flex-direction: 'row';">
-   <img src="./.github/mobile-splash.png" width="180">
-   <img src="./.github/mobile-onboarding.png" width="180">
-   <img src="./.github/mobile-home.png" width="180">
-   <img src="./.github/mobile-favoritos.png" width="180">
+   <img src="https://github.com/RafaelGoulartB/Proffy/raw/master/.github/web-landing.png" width="180">
+   <img src="https://github.com/RafaelGoulartB/Proffy/raw/master/.github/web-list.png" width="180">
+   <img src="https://github.com/RafaelGoulartB/Proffy/raw/master/.github/mobile-splash.png" width="180">
+   <img src="https://github.com/RafaelGoulartB/Proffy/raw/master/.github/mobile-favoritos.png" width="180">
 </div>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6b13a4b1-96e1-4ff3-86e3-4c9b981c77cf/deploy-status)](https://app.netlify.com/sites/proffy-rafa/deploys)     
