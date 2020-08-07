@@ -65,8 +65,8 @@ Done using:
 
 # :construction_worker: How to run
 ```bash
-# Clone o Repositoria
-$ git clone https://github.com/RafaelGoulartB/Proffy.git
+# Clone Repository
+$ git clone https://github.com/fabriciocunhauk/NLW-02-proffy.git
 ```
 ### 📦 Run API
 
