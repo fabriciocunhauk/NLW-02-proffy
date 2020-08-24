@@ -12,7 +12,7 @@
   </a>
 </p>
 
-> :rocket: Project made to connect teachers and students, Done on Next Level Week #2 @Rocketseat
+> :rocket: Project made to connect teachers and students, Done on Next Level Week #2 @Rocketseat.
 
 <p align="center">
     <a href="README.md">Inglês</a>
